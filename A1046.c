@@ -3,8 +3,9 @@
 
 #define TEST
 
-int maxdis(int a, int b, int n, int num[n]);
-
+int mindis(int a, int b, int n, int num[n]);
+    int sum = 0;
+    
 int main(void)
 {
     #ifdef TEST
@@ -12,22 +13,29 @@ int main(void)
     #endif 
     int n, m;
     scanf("%d", &n);
+    
     int num[n];
+    int dis[n];
+
+    int ans = 0;
     int i, a, b;
     memset(num, 0, sizeof(num));
+    memset(dis, 0, sizeof(dis));
     
     for (i = 0; i < n; i++)
     {
         scanf("%d", num+i);
-//        printf("%d ", num[i]);
+        dis[i] = sum;
+        sum += num[i];      
+//        printf("%d ", dis[i]);
     }
+
     scanf("%d", &m);
     for (i = 0; i < m; i++)
     {
         scanf("%d %d", &a, &b);
         //在线处理
-//        printf("%d %d\n", a, b);
-        printf("%d\n", maxdis(a-1, b-1, n, num));
+        printf("%d\n", mindis(a-1, b-1, n, dis));
     }
     
     
@@ -35,7 +43,7 @@ int main(void)
     return 0;
 }
 
-int maxdis(int a, int b, int n, int num[n])
+int mindis(int a, int b, int n, int dis[n])
 {
     int sum1, sum2, i;
     int a1, b1;
@@ -55,24 +63,9 @@ int maxdis(int a, int b, int n, int num[n])
     
 //    printf("%d %d\n", a1, b1);
     
-    for (i = a1; i < b1; i++)
-    {
-        sum1 +=  num[i];
-    }
-    
-    for (i = b1; i < n; i++ )
-    {
-        sum2 += num[i];
-    }
-    
-    for (i = 0; i < a1; i++ )
-    {
-        sum2 += num[i];
-    }
-    
+    sum1 = dis[b1] - dis[a1];
+    sum2 = sum - sum1;
 //    printf("%d %d\n", sum1, sum2);
-    return sum1 > sum2 ? sum2 : sum1;
-    
-    
+    return sum1 > sum2 ? sum2 : sum1;   
     
 }
